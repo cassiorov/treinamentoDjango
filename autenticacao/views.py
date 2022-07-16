@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.core.handlers.wsgi import WSGIRequest
+from django.http import HttpResponse, HttpRequest
 
 
-def cadastro(request):
-
-    return render(request, 'cadastro/index.html')
+def cadastro(request: WSGIRequest):
+    teste = request.GET.dict()
+    return render(request, 'cadastro/index.html', {'teste': teste})
