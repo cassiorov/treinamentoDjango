@@ -1,3 +1,13 @@
+{% extends 'base.html' %}
 {% load static %}
+
+
+{% block 'titulo' %} Meu site {% endblock %}
+
+{% block 'head' %} 
     <link rel="stylesheet" href="{% static '/css/css.css' %}">
+{% endblock %}
+
+{% block 'conteudo' %}
     <img src="{% static '/img/banana_aveia.jpg' %}" </img>
+{% endblock %}
