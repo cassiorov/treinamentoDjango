@@ -10,7 +10,7 @@ def cadastro(request: WSGIRequest):
 
 
 def valida_formulario(request: WSGIRequest):
-    dados = request.GET
+    dados = request.POST
     nome = dados.get('nome')
     email = dados.get('email')
 
