@@ -1,8 +1,3 @@
-{% for pessoa in pessoas %}
-
-    <h1>Cadastro</h1>
-    <h3>Nome: {{pessoa.nome}}</h3>
-    <h3>Idade: {{pessoa.idade}}</h3>
-    <h3>Profissao: {{pessoa.profissao}}</h3>
-    <hr>
-{% endfor %}
+{% load static %}
+    <link rel="stylesheet" href="{% static '/css/css.css' %}">
+    <img src="{% static '/img/banana_aveia.jpg' %}" </img>
