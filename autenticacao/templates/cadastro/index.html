@@ -9,6 +9,12 @@
 {% endblock %}
 
 {% block 'conteudo' %}
-    {{teste}}
-    <img src="{% static '/img/banana_aveia.jpg' %}" </img>
+
+    <form  method='GET', action="{% url 'valida_formulario' %}">
+        <input type='text' placeholder='Nome ...' name='nome'>
+        <input type='email' placeholder='Email ...' name='email'>
+        <input type='submit'>
+    </form>
+
+
 {% endblock %}
