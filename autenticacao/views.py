@@ -3,7 +3,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 import json
 
-from .models import Pessoa
+from .models import Pessoa, Cargos
 
 
 def cadastro(request: WSGIRequest):
@@ -26,3 +26,11 @@ def cadastro(request: WSGIRequest):
 def listar(request):
     pessoas = Pessoa.objects.all()
     return render(request, 'listar/listar.html', {'pessoas': pessoas})
+
+
+def listar_unico(request, id_pessoa):
+    pessoa = Pessoa.objects.filter(id=id_pessoa)
+    if pessoa:
+        return render(request, 'listar/listar.html', {'pessoas': pessoa})
+    else:
+        return HttpResponse('Pessoa inexistente')
