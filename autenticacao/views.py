@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_list_or_404
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 import json
@@ -29,8 +29,5 @@ def listar(request):
 
 
 def listar_unico(request, id_pessoa):
-    pessoa = Pessoa.objects.filter(id=id_pessoa)
-    if pessoa:
-        return render(request, 'listar/listar.html', {'pessoas': pessoa})
-    else:
-        return HttpResponse('Pessoa inexistente')
+    pessoa = get_list_or_404(Pessoa, id=id_pessoa)
+    return render(request, 'listar/listar.html', {'pessoas': pessoa})
