@@ -21,3 +21,8 @@ def cadastro(request: WSGIRequest):
         )
         pessoa.save()
         return HttpResponse(json.dumps({'nome': nome, 'email': email, 'senha': senha}))
+
+
+def listar(request):
+    pessoas = Pessoa.objects.all()
+    return render(request, 'listar/listar.html', {'pessoas': pessoas})
