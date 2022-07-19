@@ -51,7 +51,13 @@ def valida_login(request):
     senha = sha256(senha.encode()).hexdigest()
 
     usuario = Usuario.objects.filter(email=email).filter(senha=senha)
-    if usuario:
+    if not usuario:
         return redirect('/auth/login/?status=1')
     else:
-        pass
+        request.session['logado'] = True
+        return redirect('/plataforma/home/')
+
+
+def sair(request):
+    request.session.flush()
+    return redirect('/auth/login/')
