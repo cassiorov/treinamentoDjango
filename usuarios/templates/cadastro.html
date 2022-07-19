@@ -6,37 +6,16 @@
     <div class='container'>
         <br>
 
-        {% if status == '0' %}
-            <div class="alert alert-success" role="alert">
-                Usuário cadastrado com sucesso!
-            </div>
-        {% endif %}
+        {% if messages %}
 
-        {% if status == '1' %}
-            <div class="alert alert-danger" role="alert">
-                Os campos não podem ser vazios
-            </div>
-        {% endif %}
+            {% for message in messages %}
 
+                <div class="alert {{message.tags}}" role="alert">
+                    {{message}}
+                </div>
 
-        {% if status == '2' %}
-            <div class="alert alert-danger" role="alert">
-                Sua senha deve ter no mínimo 4 caracteres
-            </div>
-        {% endif %}
+            {% endfor %}
 
-
-        {% if status == '3' %}
-            <div class="alert alert-danger" role="alert">
-                E-mail já cadastrado
-            </div>
-        {% endif %}
-
-
-        {% if status == '4' %}
-            <div class="alert alert-danger" role="alert">
-                Erro interno do sistema!
-            </div>
         {% endif %}
 
 

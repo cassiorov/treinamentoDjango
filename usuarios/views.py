@@ -1,18 +1,18 @@
+from asyncio import constants
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
+from django.contrib import messages
 from hashlib import sha256
+
 
 from .models import Usuario
 
 
 def login(request):
-    status = request.GET.get('status')
-    return render(request, 'login.html', {'status': status})
+    return render(request, 'login.html')
 
 
 def cadastro(request):
-    status = request.GET.get('status')
-    return render(request, 'cadastro.html', {'status': status})
+    return render(request, 'cadastro.html')
 
 
 def valida_cadastro(request):
@@ -24,14 +24,16 @@ def valida_cadastro(request):
     for chave, valor in campos.items():
         if len(valor) == 0:
             print(f'{chave} com valor inválido!')
-            return redirect('/auth/cadastro/?status=1')
+            messages.add_message(request, messages.WARNING, f'O campo {chave} não pode ser vazio!')
+            return redirect('/auth/cadastro/')
     if len(campos.get('senha')) < 4:
-        return redirect('/auth/cadastro/?status=2')
+        messages.add_message(request, messages.WARNING, 'Sua senha não pode conter menos de 4 caracteres')
+        return redirect('/auth/cadastro/')
 
     usuario = Usuario.objects.filter(email=campos.get('email'))
     if usuario:
-        return redirect('/auth/cadastro/?status=3')
-
+        messages.add_message(request, messages.WARNING, 'Usuário já cadastrado, realize o login')
+        return redirect('/auth/cadastro/')
     try:
         user = Usuario(
             nome=campos.get('nome'),
@@ -39,10 +41,12 @@ def valida_cadastro(request):
             senha=sha256(campos.get('senha').encode()).hexdigest()
         )
         user.save()
-        return redirect('/auth/cadastro/?status=0')
+        messages.add_message(request, messages.SUCCESS, 'Cadastro realizado com sucesso!')
+        return redirect('/auth/cadastro/')
     except Exception as e:
         print(e)
-        return redirect('/auth/cadastro/?status=4')
+        messages.add_message(request, messages.ERROR, 'Erro interno do sistema ao realizar o login')
+        return redirect('/auth/cadastro/')
 
 
 def valida_login(request):
@@ -52,7 +56,8 @@ def valida_login(request):
 
     usuario = Usuario.objects.filter(email=email).filter(senha=senha)
     if not usuario:
-        return redirect('/auth/login/?status=1')
+        messages.add_message(request, messages.WARNING, 'Email ou senha inválidos')
+        return redirect('/auth/login/')
     else:
         request.session['logado'] = True
         return redirect('/plataforma/home/')
@@ -60,4 +65,5 @@ def valida_login(request):
 
 def sair(request):
     request.session.flush()
+    messages.add_message(request, messages.SUCCESS, 'Você foi desconectado com sucesso!')
     return redirect('/auth/login/')

@@ -7,39 +7,17 @@
     <div class='container'>
         <br>
 
-        {% if status == '0' %}
-            <div class="alert alert-success" role="alert">
-                Usuário cadastrado com sucesso!
-            </div>
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="alert {{message.tags}}" role="alert">
+                    {{message}}
+                </div>
+
+            {% endfor %}
+
         {% endif %}
-
-        {% if status == '1' %}
-            <div class="alert alert-warning" role="alert">
-                E-mail ou senha inválidos!
-            </div>
-        {% endif %}
-
-
-        {% if status == '2' %}
-            <div class="alert alert-warning" role="alert">
-                Faça login antes de acessar o sistema!
-            </div>
-        {% endif %}
-
-
-        {% if status == '3' %}
-            <div class="alert alert-danger" role="alert">
-                E-mail já cadastrado
-            </div>
-        {% endif %}
-
-
-        {% if status == '4' %}
-            <div class="alert alert-danger" role="alert">
-                Erro interno do sistema!
-            </div>
-        {% endif %}
-
 
         <div class='row'>
         
